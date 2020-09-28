@@ -44,6 +44,17 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
+    personService.create(personObject)
+    .then(returnedPerson => {
+      setPersons(persons.concat(returnedPerson));
+      setNewName('');
+      setNewNumber('');
+    })
+    .catch(error => {
+      console.log(error);
+      console.log('fail');
+    })
+   /*
     const findPerson = persons.find(person => person.name === newName);
     if (findPerson === undefined) {
       personService.create(personObject)
@@ -60,7 +71,8 @@ const App = () => {
         setNewName('');
         setNewNumber('');
       }
-    }
+    }*/
+    
   }
 
   const deletePerson = (delPerson) => {
