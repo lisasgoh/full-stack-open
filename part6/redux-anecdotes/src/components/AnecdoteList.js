@@ -6,7 +6,7 @@ const AnecdoteList = () => {
   /**
    * useSelector receives a function as a parameter. The function either searches for or selects data from the redux-store.
    */
-  const anecdotes = useSelector(state => state)
+  const anecdotes = useSelector((state) => { return state.sort((a, b) => b.votes - a.votes)})
   /**
    * The useDispatch-hook provides any React component access to the dispatch-function of the redux-store defined in index.js. 
    * This allows all components to make changes to the state of the redux-store.
