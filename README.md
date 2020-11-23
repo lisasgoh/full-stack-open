@@ -1,2 +1,2 @@
 ﻿# full-stack-open
-Just wanted to practise some web development using the MERN stack.
+This repository contains exercise solutions to the 2020 edition of the Full Stack Open course from the University of Helsinki.
