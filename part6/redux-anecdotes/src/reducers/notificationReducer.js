@@ -1,13 +1,18 @@
 const initialNotification = ""
 
-  export const setNotification = (content) => {
-    return {
-      type: 'SHOW_NOTIFICATION',
-      data: { content }
+  export const setNotification = (content, time) => {
+    return async dispatch => {
+      await dispatch({
+        type: 'SHOW_NOTIFICATION',
+        data: { content }
+      })
+      setTimeout(() => {
+        dispatch(hideNotification())
+      }, time * 1000)
     }
   }
 
-  export const hideNotification = (content) => {
+  export const hideNotification = () => {
     return {
       type: 'HIDE_NOTIFICATION',
     }
