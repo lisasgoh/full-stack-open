@@ -1,3 +1,5 @@
+import anecdoteService from './services/anecdoteService'
+
 export const voteAnecdote = (id) => {
   return {
     type: 'VOTE',
@@ -5,17 +7,27 @@ export const voteAnecdote = (id) => {
   }
 }
 
-export const createAnecdote = (anecdote) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    anecdote
+export const createAnecdote = (content) => {
+    return async dispatch => {
+    const anecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      anecdote
+    })
   }
 }
-
-export const initializeAnecdotes = (anecdotes) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data: anecdotes,
+/**
+ * it is possible to define action creators so that they return a function having the dispatch-method of redux-store as its parameter. 
+ * As a result of this, one can make asynchronous action creators, which first wait for some operation to finish, after which they then dispatch the real action.
+ * @param {Array} anecdotes 
+ */
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes,
+    })
   }
 }
 
