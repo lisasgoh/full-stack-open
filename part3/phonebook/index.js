@@ -52,7 +52,8 @@ app.get("/api/persons/:id", (req, res) => {
 app.get("/info", (req, res) => {
   const date = new Date();
   Person.find({}).then((persons) => {
-    res.json(persons);
+    console.log(persons);
+    res.json(`Phonebook has info for ${persons.length} people \n ${date}`);
   });
 });
 
