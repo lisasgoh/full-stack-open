@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const supertest = require('supertest');
 const app = require('../app');
 const helper = require('./test_helper');
 
 const api = supertest(app);
 const Blog = require('../models/Blog');
+const User = require('../models/User');
 
+beforeAll(async () => {
+  await User.deleteMany({});
+
+  const passwordHash = await bcrypt.hash('sekret', 10);
+  const user = new User({ username: 'root', passwordHash });
+
+  await user.save();
+});
 beforeEach(async () => {
   await Blog.deleteMany({});
   const blogObjects = helper.initialBlogs.map((blog) => new Blog(blog));
@@ -37,12 +47,15 @@ describe('when there are initially some blogs saved', () => {
 
 describe('addition of a new blog', () => {
   test('a blog can be added ', async () => {
+    const usersInDb = await helper.usersInDb();
+    const user = usersInDb[0];
     const newBlog = {
       title: 'TESTING 123',
       author: 'Edsger W. Dijkstra',
       url:
         'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 5,
+      userId: user.id,
     };
     await api
       .post('/api/blogs')
@@ -58,10 +71,13 @@ describe('addition of a new blog', () => {
   });
 
   test('a blog added without likes has the value default to 0 ', async () => {
+    const usersInDb = await helper.usersInDb();
+    const user = usersInDb[0];
     const newBlog = {
       title: 'New blog without likes',
       author: 'AAAAAA',
       url: 'https://123456patterns.com/',
+      userId: user.id,
     };
     await api
       .post('/api/blogs')
@@ -78,9 +94,12 @@ describe('addition of a new blog', () => {
   });
 
   test('a blog added without title and url is invalid ', async () => {
+    const usersInDb = await helper.usersInDb();
+    const user = usersInDb[0];
     const newBlog = {
       author: 'ABCDEFG',
       likes: 10,
+      userId: user.id,
     };
     await api.post('/api/blogs').send(newBlog).expect(400);
 
