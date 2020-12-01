@@ -22,6 +22,24 @@ blogRouter.get('/', async (request, response) => {
   }
 });
 
+blogRouter.get('/user', async (request, response) => {
+  const token = getTokenFrom(request);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' });
+  }
+  User.findById(decodedToken.id)
+    .populate('blogs', {
+      title: 1,
+      author: 1,
+      url: 1,
+      likes: 1,
+    })
+    .then((user) => {
+      response.json(user);
+    });
+});
+
 blogRouter.post('/', async (request, response) => {
   const { title, url, likes, author, userId } = request.body;
   const token = getTokenFrom(request);
