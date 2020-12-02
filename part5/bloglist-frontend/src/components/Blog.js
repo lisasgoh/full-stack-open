@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 const Blog = ({ blog, user, likeBlog, deleteBlog }) => {
   const [show, setShow] = useState(false);
-  const showWhenVisible = { display: show ? "" : "none" };
+  const showWhenVisible = { display: show ? '' : 'none' };
 
   const toggleVisibility = () => {
     setShow(!show);
@@ -19,7 +19,7 @@ const Blog = ({ blog, user, likeBlog, deleteBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
   };
@@ -28,7 +28,7 @@ const Blog = ({ blog, user, likeBlog, deleteBlog }) => {
       <div>
         {blog.title} {blog.author}
         <button onClick={toggleVisibility}>
-          {show === true ? "hide" : "show"}
+          {show === true ? 'hide' : 'show'}
         </button>
       </div>
       <div style={showWhenVisible}>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import Blog from "./components/Blog";
-import NewBlog from "./components/NewBlog";
-import Login from "./components/LoginForm";
-import Togglable from "./components/Togglable";
-import blogService from "./services/blogs";
-import loginService from "./services/login";
+import React, { useState, useEffect, useRef } from 'react';
+import Blog from './components/Blog';
+import NewBlog from './components/NewBlog';
+import Login from './components/LoginForm';
+import Togglable from './components/Togglable';
+import blogService from './services/blogs';
+import loginService from './services/login';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -46,11 +46,11 @@ const App = () => {
   const handleLogin = async (newObject) => {
     try {
       const user = await loginService.login(newObject);
-      window.localStorage.setItem("loggedinuser", JSON.stringify(user));
+      window.localStorage.setItem('loggedinuser', JSON.stringify(user));
       blogService.setToken(user.token);
       setUser(user);
     } catch (exception) {
-      setErrorMessage("wrong username or password");
+      setErrorMessage('wrong username or password');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -64,7 +64,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedinuser");
+    const loggedUserJSON = window.localStorage.getItem('loggedinuser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);

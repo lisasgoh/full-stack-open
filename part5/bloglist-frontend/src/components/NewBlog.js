@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 const NewBlog = ({ createBlog }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
   const handleTitleChange = ({ target }) => setTitle(target.value);
   const handleAuthorChange = ({ target }) => setAuthor(target.value);
   const handleUrlChange = ({ target }) => setUrl(target.value);
@@ -14,9 +14,9 @@ const NewBlog = ({ createBlog }) => {
       url: url,
     };
     createBlog(newBlog);
-    setTitle("");
-    setAuthor("");
-    setUrl("");
+    setTitle('');
+    setAuthor('');
+    setUrl('');
   };
   return (
     <>
