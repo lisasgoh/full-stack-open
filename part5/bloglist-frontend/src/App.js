@@ -23,6 +23,26 @@ const App = () => {
     }, 5000);
   };
 
+  const likeBlog = async (blogObject, id) => {
+    const { title, author, url, user, likes } = blogObject;
+    const updatedBlog = {
+      title,
+      author,
+      url,
+      user: user.id,
+      likes: likes + 1,
+    };
+    await blogService.update(updatedBlog, id);
+    const newBlogs = blogs.map((blog) => (blog.id !== id ? blog : blogObject));
+    setBlogs(newBlogs);
+  };
+
+  const deleteBlog = async (id) => {
+    await blogService.deleteObj(id);
+    const newBlogs = blogs.filter((blog) => blog.id !== id);
+    console.log(newBlogs);
+    setBlogs(newBlogs);
+  };
   const handleLogin = async (newObject) => {
     try {
       const user = await loginService.login(newObject);
@@ -73,7 +93,13 @@ const App = () => {
           </Togglable>
           <button onClick={handleLogout}>logout</button>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} user={user} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              user={user}
+              likeBlog={likeBlog}
+              deleteBlog={deleteBlog}
+            />
           ))}
         </div>
       )}

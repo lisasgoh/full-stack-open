@@ -14,7 +14,7 @@ const getTokenFrom = (request) => {
 };
 
 blogRouter.get('/', async (request, response) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate('user');
   if (blogs) {
     response.json(blogs);
   } else {
