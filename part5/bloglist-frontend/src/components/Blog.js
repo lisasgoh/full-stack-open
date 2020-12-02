@@ -31,14 +31,13 @@ const Blog = ({ blog, user, likeBlog, deleteBlog }) => {
           {show === true ? 'hide' : 'show'}
         </button>
       </div>
-      <div style={showWhenVisible}>
-        {blog.url}
-        <br></br>
-        {blog.likes}
+      <div style={showWhenVisible} className="more-info">
+        <div className="blog-url">{blog.url}</div>
+        <div className="blog-likes">{blog.likes}</div>
         <button onClick={handleLike}>like</button>
         <br></br>
         {blog.user.name}
-        {blog.user.id === user.id && (
+        {blog.user.id && user.id && blog.user.id === user.id && (
           <button onClick={handleDelete}>delete</button>
         )}
       </div>
